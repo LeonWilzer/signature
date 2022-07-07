@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.getString;
 import static net.minecraft.server.command.CommandManager.literal;
+
 import static net.minecraft.server.command.CommandManager.argument;
 
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ public class SignStackCommand {
 
         public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
                 dispatcher.register(
-                                literal("signstack")
+                                literal("signstack").executes(ctx -> signstack(ctx.getSource(), null))
                                                 .then(argument("description", greedyString())
                                                                 .executes(ctx -> signstack(ctx.getSource(),
                                                                                 getString(ctx, "description")))));
@@ -32,14 +33,22 @@ public class SignStackCommand {
                 ServerPlayerEntity player = serverCommandSource.getPlayer();
                 ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
 
-                description = description.replaceAll("\"", "\\\\\"");
-                description = description.replaceAll("\"", "\\\\\"");
-                description = description.replaceAll("'", "\\\\'");
+                String nbtString;
 
-                String nbtString = String.format(
-                                "{display:{Lore:['[{\"text\":\"%1$s\",\"italic\":false,\"color\":\"gold\"},{\"text\":\"\"}]','[{\"text\":\"\"}]','[{\"text\":\"Signed by \",\"italic\":true,\"color\":\"blue\"},{\"text\":\"%2$s\",\"underlined\":true}]']}}",
-                                description, player.getEntityName());
-                System.out.println(nbtString);
+                if (description == null) {
+                        nbtString = String.format(
+                                        "{display:{Lore:['[{\"text\":\"Signed by \",\"color\":\"blue\"},{\"text\":\"%s\",\"underlined\":true}]']}}",
+                                        player.getEntityName());
+                } else {
+                        description = description.replaceAll("\"", "\\\\\"");
+                        description = description.replaceAll("\"", "\\\\\"");
+                        description = description.replaceAll("'", "\\\\'");
+
+                        nbtString = String.format(
+                                        "{display:{Lore:['[{\"text\":\"%1$s\",\"italic\":false,\"color\":\"gold\"},{\"text\":\"\"}]','[{\"text\":\"\"}]','[{\"text\":\"Signed by \",\"italic\":true,\"color\":\"blue\"},{\"text\":\"%2$s\",\"underlined\":true}]']}}",
+                                        description, player.getEntityName());
+
+                }
 
                 NbtCompound nbt = NbtHelper.fromNbtProviderString(nbtString);
 
