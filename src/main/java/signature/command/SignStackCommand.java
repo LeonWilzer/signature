@@ -14,6 +14,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 
 public class SignStackCommand {
@@ -43,7 +44,8 @@ public class SignStackCommand {
                 NbtCompound nbt = NbtHelper.fromNbtProviderString(nbtString);
 
                 stack.setNbt(nbt);
-
+                serverCommandSource.sendFeedback(
+                                Text.of("Item stack signed!"), false);
                 return 1;
         }
 }
