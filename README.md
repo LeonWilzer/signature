@@ -10,7 +10,7 @@ If <description> is the description you want the item to have. If left empty, th
 Items can be signed arbitrarily often.
 
 ## License
-This Project uses GPL v3.0 or above.
+This Project is licensed under GPL v3.0 or above.
 
 ## Dependencies
 This mod requires the Fabric API mod.
