@@ -2,6 +2,7 @@ package signature.command;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
@@ -32,6 +33,10 @@ public class SignStackCommand {
                         throws CommandSyntaxException {
                 ServerPlayerEntity player = serverCommandSource.getPlayer();
                 ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
+                if (stack.isEmpty()) {
+                        serverCommandSource.sendError(Text.of("Please hold an item in your main hand."));
+                        return -1;
+                }
 
                 String nbtString;
 
@@ -55,6 +60,6 @@ public class SignStackCommand {
                 stack.setNbt(nbt);
                 serverCommandSource.sendFeedback(
                                 Text.of("Item stack signed!"), false);
-                return 1;
+                return Command.SINGLE_SUCCESS;
         }
 }
