@@ -13,7 +13,6 @@
   },
 
   "license": "GPLv3+",
-  "icon": "assets/signature/icon.png",
 
   "environment": "*",
   "entrypoints": {
