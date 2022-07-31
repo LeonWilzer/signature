@@ -1,9 +1,13 @@
-# Fabric Example Mod
+# Signature
 
-## Setup
+A very simple Fabric mod, which allows you to sign items with an optional description.
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+## Usage
+Hold the item stack you want to sign in your main (right) hand and execute the following command:
+`/signstack <description>`
+
+If <description> is the description you want the item to have. If left empty, the description will be left out.
+Items can be signed arbitrarily often.
 
 ## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+This Project uses GPL v3.0 or above.
