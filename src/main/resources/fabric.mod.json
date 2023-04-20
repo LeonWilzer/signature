@@ -20,7 +20,7 @@
       "signature.Signature"
     ]
   },
-
+  
   "depends": {
     "fabricloader": ">=0.12.12",
     "fabric": "*",
